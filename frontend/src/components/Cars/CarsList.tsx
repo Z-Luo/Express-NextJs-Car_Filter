@@ -50,6 +50,11 @@ const NoData = styled.div`
   margin: 0 auto;
   background-color: ${color.primaryColor};
   height: 450px;
+  display: flex;
+  justify-content: center;
+  padding-top: 200px;
+  color: ${color.textColor};
+  font-size: 18px;
 `;
 
 const CarsList: React.FC<CarListProps> = ({ data }) => {
@@ -83,7 +88,7 @@ const CarsList: React.FC<CarListProps> = ({ data }) => {
           </tbody>
         </StyledTable>
       ) : (
-        <NoData>No data available</NoData>
+        <NoData>No records available</NoData>
       )}
     </>
   );

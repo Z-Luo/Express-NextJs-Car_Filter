@@ -18,6 +18,7 @@ interface CarsFilterProps {
   onFilterChange: (filterName: string, value: any) => void;
   selectedFilters: Object;
   onApply: () => void;
+  onSortChange: () => void;
   data: {
     count: number;
     averageKm: number;
@@ -128,6 +129,7 @@ const SortDropdown = styled.select`
   font-weight: 600;
   display: flex;
   padding-left: 30px;
+  position: relative;
 `;
 
 const SortButtonContainer = styled.div`
@@ -166,14 +168,6 @@ const filterOptions: FilterOption[] = [
   },
   {
     label: "model",
-    // optionsByMake: {
-    //   Audi: ["A3", "A4", "A5", "Q3", "Q5"],
-    //   BMW: ["3 Series", "5 Series", "X3", "X5"],
-    //   Mercedes: ["C-Class", "E-Class", "GLC", "GLE"],
-    //   Toyota: ["Corolla", "Camry", "RAV4", "Highlander"],
-    //   Honda: ["Civic", "Accord", "CR-V", "Pilot"],
-    //   Ford: ["Focus", "Fusion", "Escape", "Explorer"],
-    // },
     options: ["Model", "A3", "A4", "A5", "A7", "Q3", "Q5"],
   },
   {
@@ -238,8 +232,8 @@ const filterOptions: FilterOption[] = [
 
 const CarsFilter: React.FC<CarsFilterProps> = ({
   onFilterChange,
-  selectedFilters,
   onApply,
+  onSortChange,
   data,
 }) => {
   const [activeButton, setActiveButton] = useState<"asc" | "desc">("asc");
@@ -248,10 +242,14 @@ const CarsFilter: React.FC<CarsFilterProps> = ({
 
   const handleLeftButtonClick = () => {
     setActiveButton("asc");
+    onFilterChange("sortByDate", "asc");
+    onSortChange();
   };
 
   const handleRightButtonClick = () => {
     setActiveButton("desc");
+    onFilterChange("sortByDate", "desc");
+    onSortChange();
   };
 
   return (
@@ -289,12 +287,15 @@ const CarsFilter: React.FC<CarsFilterProps> = ({
               Average KM: <b>{averageKm}</b>
             </Data>
             <Data>
-              Average age: <b>{averageAgeString}</b>
+              Average age:{" "}
+              <b>
+                <i>{averageAgeString}</i>
+              </b>
             </Data>
           </DataContainer>
           <SortContainer>
             <SortDropdown>
-              <option>Sort by Age</option>
+              <option>Sort by Date</option>
             </SortDropdown>
             <SortButtonContainer>
               <LeftSortButton

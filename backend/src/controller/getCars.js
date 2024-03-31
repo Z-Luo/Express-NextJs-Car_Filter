@@ -35,8 +35,8 @@ const getCars = async (req, res) => {
     }
 
     const count = cars.length;
-    const totalKm = cars.reduce((acc, car) => acc + car.odometer, 0);
-    const averageKm = totalKm / count;
+    const totalKm = cars.reduce((acc, car) => acc + +car.odometer, 0);
+    const averageKm = Math.floor(totalKm / count);
 
     const averageAgeYears =
       cars.reduce(

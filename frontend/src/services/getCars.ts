@@ -11,6 +11,7 @@ interface CarQueryParams {
     category?: string;
     isSalvage?: boolean;
     saleDate?: string;
+    sortByDate?: string;
   }
 
  const fetchCars = (queryParams:CarQueryParams) => {

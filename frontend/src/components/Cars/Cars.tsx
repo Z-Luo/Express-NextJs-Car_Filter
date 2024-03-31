@@ -33,17 +33,18 @@ const selectedFiltersObj = {};
 const Cars = () => {
   const [carData, setCarData] = useState<CarDataResponse>();
   const [selectedFilters, setSelectedFilters] = useState(selectedFiltersObj);
-  const [appliedFilters, setAppliedFilters] = useState(selectedFiltersObj); // Store applied filters separately
+  const [appliedFilters, setAppliedFilters] = useState(selectedFiltersObj);
+  const [sortFilters, setSortFilters] = useState(selectedFiltersObj);
 
   useEffect(() => {
     const getCarsData = async () => {
-      const queryParams = { ...appliedFilters };
+      const queryParams = { ...appliedFilters, ...sortFilters };
       const data = await fetchCars(queryParams);
       setCarData(data.data);
     };
 
     getCarsData();
-  }, [appliedFilters]);
+  }, [appliedFilters, sortFilters]);
 
   const handleFilterChange = (filterName: string, value: any) => {
     setSelectedFilters({
@@ -55,6 +56,9 @@ const Cars = () => {
   const handleApplyFilters = () => {
     setAppliedFilters(selectedFilters); // Apply selected filters when the Apply button is clicked
   };
+  const handleSortFilters = () => {
+    setSortFilters(selectedFilters); // Apply selected filters when the sort button is clicked
+  };
 
   return (
     <Container>
@@ -62,6 +66,7 @@ const Cars = () => {
         onFilterChange={handleFilterChange}
         selectedFilters={selectedFilters}
         onApply={handleApplyFilters} // Pass the apply handler to the filter component
+        onSortChange={handleSortFilters}
         data={carData!}
       />
       <CarsList data={carData!} />
