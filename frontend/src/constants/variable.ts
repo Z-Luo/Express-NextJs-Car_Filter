@@ -39,7 +39,7 @@ export const color: IColor = {
 	blackColor: '#000',
     blueColor: '#00A1CB',
     greyColor: '#212121',
-    darkGreyColor: '#051c2c'
+    darkGreyColor: '#051c2c',
 };
 
 

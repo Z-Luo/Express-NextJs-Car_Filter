@@ -9,6 +9,7 @@ interface CarListProps {
     averageKm: number;
     averageAgeString: string;
   };
+  itemsToShow: number;
 }
 
 const infoList: string[] = [
@@ -25,7 +26,7 @@ const infoList: string[] = [
 ];
 
 const StyledTable = styled.table`
-  margin: 70px auto;
+  margin: 70px auto 40px auto;
   max-width: 1400px;
   width: 100%;
   border-collapse: collapse;
@@ -49,15 +50,15 @@ const StyledTd = styled.td`
 const NoData = styled.div`
   margin: 0 auto;
   background-color: ${color.primaryColor};
-  height: 450px;
+  height: 600px;
   display: flex;
   justify-content: center;
-  padding-top: 200px;
+  padding-top: 250px;
   color: ${color.textColor};
   font-size: 18px;
 `;
 
-const CarsList: React.FC<CarListProps> = ({ data }) => {
+const CarsList: React.FC<CarListProps> = ({ data, itemsToShow }) => {
   const { docs } = data || {};
   return (
     <>
@@ -71,7 +72,7 @@ const CarsList: React.FC<CarListProps> = ({ data }) => {
             </StyledTr>
           </thead>
           <tbody>
-            {docs.map((item) => (
+            {docs.slice(0, itemsToShow).map((item) => (
               <StyledTr key={item._id}>
                 <StyledTd>{item.make}</StyledTd>
                 <StyledTd>{item.model}</StyledTd>

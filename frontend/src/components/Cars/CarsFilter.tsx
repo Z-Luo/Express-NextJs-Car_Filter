@@ -19,6 +19,7 @@ interface CarsFilterProps {
   selectedFilters: Object;
   onApply: () => void;
   onSortChange: () => void;
+  onClear: () => void;
   data: {
     count: number;
     averageKm: number;
@@ -27,11 +28,11 @@ interface CarsFilterProps {
 }
 
 const ColorWrapper = styled.div`
-  background-color: ${color.primaryColor};
+  background-color: ${primaryColor};
+  width: 100%;
 `;
 
 const Container = styled.div`
-  background-color: ${primaryColor};
   max-width: 960px;
   display: flex;
   flex-direction: column;
@@ -49,7 +50,6 @@ const Title = styled.div`
 
 const FilterContainer = styled.div`
   background-color: ${textColor};
-  //   height: 200px;
   border-radius: 20px;
   padding: 24px;
   display: flex;
@@ -235,6 +235,7 @@ const CarsFilter: React.FC<CarsFilterProps> = ({
   onApply,
   onSortChange,
   data,
+  onClear,
 }) => {
   const [activeButton, setActiveButton] = useState<"asc" | "desc">("asc");
 
@@ -266,7 +267,12 @@ const CarsFilter: React.FC<CarsFilterProps> = ({
                 }}
               >
                 {item.options?.map((option, i) => (
-                  <option key={i} value={option} disabled={i === 0}>
+                  <option
+                    key={option}
+                    value={option}
+                    // disabled={i === 0}
+                    // defaultValue={option[0]}
+                  >
                     {option}
                   </option>
                 ))}
@@ -275,7 +281,7 @@ const CarsFilter: React.FC<CarsFilterProps> = ({
           </SelectContainer>
           <BtnContainer>
             <ApplyBtn onClick={onApply}>Apply</ApplyBtn>
-            <ClearBtn>Clear</ClearBtn>
+            <ClearBtn onClick={onClear}>Clear</ClearBtn>
           </BtnContainer>
         </FilterContainer>
         <InfoContainer>

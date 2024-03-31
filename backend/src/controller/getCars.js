@@ -4,8 +4,8 @@ const getCars = async (req, res) => {
   try {
     let pipeline = [];
 
-    if (req.query.maker) {
-      pipeline.push({ $match: { make: req.query.maker } });
+    if (req.query.make) {
+      pipeline.push({ $match: { make: req.query.make } });
     }
 
     if (req.query.model) {
