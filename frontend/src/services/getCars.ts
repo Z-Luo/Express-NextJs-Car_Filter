@@ -1,10 +1,24 @@
 import request, { baseURL } from '@/utils/request';
 
-export const fetchCars = () => {
+interface CarQueryParams {
+    make?: string;
+    model?: string;
+    year?: string;
+    description?: string;
+    odometer?: string;
+    condition?: string;
+    location?: string;
+    category?: string;
+    isSalvage?: boolean;
+    saleDate?: string;
+  }
+
+ const fetchCars = (queryParams:CarQueryParams) => {
 	return request({
 		baseURL,
 		method: 'GET',
-		url: '/car'
+		url: '/car',
+        params: queryParams
 	});
 };
 

@@ -14,6 +14,17 @@ interface SortButtonProps {
   active?: boolean;
 }
 
+interface CarsFilterProps {
+  onFilterChange: (filterName: string, value: any) => void;
+  selectedFilters: Object;
+  onApply: () => void;
+  data: {
+    count: number;
+    averageKm: number;
+    averageAgeString: string;
+  };
+}
+
 const ColorWrapper = styled.div`
   background-color: ${color.primaryColor};
 `;
@@ -43,13 +54,6 @@ const FilterContainer = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-`;
-const FilterWrapper = styled.div`
-  //   display: flex;
-  //   flex-direction: column;
-  //   justify-content: end;
-  //   align-items: center;
-  //
 `;
 
 const SelectContainer = styled.div`
@@ -157,11 +161,11 @@ const RightSortButton = styled(SortButton)`
 
 const filterOptions: FilterOption[] = [
   {
-    label: "Make",
-    options: ["Audi", "BMW", "Mercedes", "Toyota", "Honda", "Ford"],
+    label: "make",
+    options: ["Make", "Audi", "BMW", "Mercedes", "Toyota", "Honda", "Ford"],
   },
   {
-    label: "Model",
+    label: "model",
     // optionsByMake: {
     //   Audi: ["A3", "A4", "A5", "Q3", "Q5"],
     //   BMW: ["3 Series", "5 Series", "X3", "X5"],
@@ -170,14 +174,24 @@ const filterOptions: FilterOption[] = [
     //   Honda: ["Civic", "Accord", "CR-V", "Pilot"],
     //   Ford: ["Focus", "Fusion", "Escape", "Explorer"],
     // },
-    options: ["A3", "A4", "A5", "A7", "Q3", "Q5"],
+    options: ["Model", "A3", "A4", "A5", "A7", "Q3", "Q5"],
   },
   {
-    label: "Year",
-    options: ["2022", "2021", "2020", "2019", "2018", "2017", "2016", "2015"],
+    label: "year",
+    options: [
+      "Year",
+      "2022",
+      "2021",
+      "2020",
+      "2019",
+      "2018",
+      "2017",
+      "2016",
+      "2015",
+    ],
   },
   {
-    label: "Odometer",
+    label: "odometer",
     options: [
       "Odometer",
       "0-50000",
@@ -187,7 +201,7 @@ const filterOptions: FilterOption[] = [
     ],
   },
   {
-    label: "Condition",
+    label: "condition",
     options: [
       "All Car Conditions",
       "Excellent",
@@ -197,11 +211,11 @@ const filterOptions: FilterOption[] = [
     ],
   },
   {
-    label: "State",
+    label: "state",
     options: ["State", "ACT", "NSW", "QLD", "SA", "TAS", "VIC", "WA"],
   },
   {
-    label: "Custom Date",
+    label: "custom date",
     options: [
       "Custom Date",
       "Last 7 days",
@@ -211,7 +225,7 @@ const filterOptions: FilterOption[] = [
     ],
   },
   {
-    label: "Sale category",
+    label: "sale category",
     options: [
       "Sale category",
       "Auction",
@@ -222,8 +236,15 @@ const filterOptions: FilterOption[] = [
   },
 ];
 
-const CarsFilter = () => {
+const CarsFilter: React.FC<CarsFilterProps> = ({
+  onFilterChange,
+  selectedFilters,
+  onApply,
+  data,
+}) => {
   const [activeButton, setActiveButton] = useState<"asc" | "desc">("asc");
+
+  const { count, averageKm, averageAgeString } = data || {};
 
   const handleLeftButtonClick = () => {
     setActiveButton("asc");
@@ -240,9 +261,14 @@ const CarsFilter = () => {
         <FilterContainer>
           <SelectContainer>
             {filterOptions.map((item) => (
-              <Select key={item.label}>
+              <Select
+                key={item.label}
+                onChange={(e) => {
+                  onFilterChange(item.label, e.target.value);
+                }}
+              >
                 {item.options?.map((option, i) => (
-                  <option key={i} value={option}>
+                  <option key={i} value={option} disabled={i === 0}>
                     {option}
                   </option>
                 ))}
@@ -250,15 +276,21 @@ const CarsFilter = () => {
             ))}
           </SelectContainer>
           <BtnContainer>
-            <ApplyBtn>Apply</ApplyBtn>
+            <ApplyBtn onClick={onApply}>Apply</ApplyBtn>
             <ClearBtn>Clear</ClearBtn>
           </BtnContainer>
         </FilterContainer>
         <InfoContainer>
           <DataContainer>
-            <Data>Records: 124</Data>
-            <Data>Average KM: 94200</Data>
-            <Data>Average age: 8yrs</Data>
+            <Data>
+              Records: <b>{count}</b>
+            </Data>
+            <Data>
+              Average KM: <b>{averageKm}</b>
+            </Data>
+            <Data>
+              Average age: <b>{averageAgeString}</b>
+            </Data>
           </DataContainer>
           <SortContainer>
             <SortDropdown>

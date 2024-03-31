@@ -1,19 +1,14 @@
 import styled from "styled-components";
-import fetchCars from "@/services/getCars";
-import { useEffect, useState } from "react";
+import { ICar } from "./Cars";
+import { color } from "@/constants/variable";
 
-interface Car {
-  _id: string;
-  make: string;
-  model: string;
-  year: number;
-  description: string;
-  odometer: number;
-  condition: string;
-  location: string;
-  category: string;
-  isSalvage: boolean;
-  saleDate: string;
+interface CarListProps {
+  data: {
+    docs: ICar[];
+    count: number;
+    averageKm: number;
+    averageAgeString: string;
+  };
 }
 
 const infoList: string[] = [
@@ -27,51 +22,70 @@ const infoList: string[] = [
   "Sale category",
   "Salvage Vehicle",
   "Sale date",
-  "Sale price",
 ];
 
 const StyledTable = styled.table`
+  margin: 70px auto;
+  max-width: 1400px;
   width: 100%;
   border-collapse: collapse;
 `;
 
-const StyledTh = styled.th`
-  font-weight: 600;
-  padding: 10px; /* Adjust the padding to add space between cells */
+const StyledTr = styled.tr`
+  border-bottom: 1px solid grey;
 `;
 
-const CarsList = () => {
-  const [carData, setCarData] = useState<Car[]>();
+const StyledTh = styled.th`
+  font-weight: 600;
+  padding: 24px 20px;
+  text-align: left;
+`;
+const StyledTd = styled.td`
+  padding: 20px;
+  text-align: left;
+  vertical-align: top;
+`;
 
-  useEffect(() => {
-    const getCarsData = async () => {
-      const data = await fetchCars();
-      setCarData(data.docs);
-      console.log(data);
-    };
+const NoData = styled.div`
+  margin: 0 auto;
+  background-color: ${color.primaryColor};
+  height: 450px;
+`;
 
-    getCarsData();
-  });
-
+const CarsList: React.FC<CarListProps> = ({ data }) => {
+  const { docs } = data || {};
   return (
-    <StyledTable>
-      <thead>
-        <tr>
-          {infoList.map((item, i) => (
-            <StyledTh key={i}>{item}</StyledTh>
-          ))}
-        </tr>
-      </thead>
-      <tbody>
-        {carData &&
-          carData.map((item) => (
-            <tr key={item._id}>
-              <td>{item.make}</td>
-              <td>{item.model}</td>
-            </tr>
-          ))}
-      </tbody>
-    </StyledTable>
+    <>
+      {Array.isArray(docs) && docs?.length > 0 ? (
+        <StyledTable>
+          <thead>
+            <StyledTr>
+              {infoList.map((item, i) => (
+                <StyledTh key={i}>{item}</StyledTh>
+              ))}
+            </StyledTr>
+          </thead>
+          <tbody>
+            {docs.map((item) => (
+              <StyledTr key={item._id}>
+                <StyledTd>{item.make}</StyledTd>
+                <StyledTd>{item.model}</StyledTd>
+                <StyledTd>{item.year}</StyledTd>
+                <StyledTd>{item.description}</StyledTd>
+                <StyledTd>{item.odometer}</StyledTd>
+                <StyledTd>{item.condition}</StyledTd>
+                <StyledTd>{item.location}</StyledTd>
+                <StyledTd>{item.category}</StyledTd>
+                <StyledTd>{item.isSalvage ? "Yes" : "No"}</StyledTd>
+                <StyledTd>{item.saleDate}</StyledTd>
+              </StyledTr>
+            ))}
+          </tbody>
+        </StyledTable>
+      ) : (
+        <NoData>No data available</NoData>
+      )}
+    </>
   );
 };
 
