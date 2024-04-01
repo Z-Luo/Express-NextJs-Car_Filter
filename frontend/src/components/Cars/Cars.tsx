@@ -87,7 +87,7 @@ const Cars = () => {
   };
 
   const handleLoadMore = () => {
-    setItemsToShow((prevItemsToShow) => prevItemsToShow + itemsIncrement); // Increment the number of items to show
+    setItemsToShow((prevItemsToShow) => prevItemsToShow + itemsIncrement);
   };
 
   return (
@@ -95,16 +95,15 @@ const Cars = () => {
       <CarsFilter
         onFilterChange={handleFilterChange}
         selectedFilters={selectedFilters}
-        onApply={handleApplyFilters} // Pass the apply handler to the filter component
+        onApply={handleApplyFilters}
         onSortChange={handleSortFilters}
         onClear={handleClearFilters}
         data={carData!}
       />
       <CarsList data={carData!} itemsToShow={itemsToShow} />
-      {carData &&
-        carData.docs.length > itemsToShow && ( // Render "Load More" button if there are more items to load
-          <MoreButton onClick={handleLoadMore}>Load more</MoreButton>
-        )}
+      {carData && carData.docs.length > itemsToShow && (
+        <MoreButton onClick={handleLoadMore}>Load more</MoreButton>
+      )}
     </Container>
   );
 };

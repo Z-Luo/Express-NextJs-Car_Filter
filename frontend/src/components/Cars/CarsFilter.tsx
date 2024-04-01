@@ -274,12 +274,7 @@ const CarsFilter: React.FC<CarsFilterProps> = ({
                 }}
               >
                 {item.options?.map((option, i) => (
-                  <option
-                    key={option}
-                    value={option}
-                    // disabled={i === 0}
-                    // defaultValue={option[0]}
-                  >
+                  <option key={option} value={option}>
                     {option}
                   </option>
                 ))}
