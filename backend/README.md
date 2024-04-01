@@ -1,15 +1,9 @@
 ## Getting Started
 
-First, run the development server:
+First, run the server:
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm start
 ```
 
 ## Project structure
@@ -17,25 +11,13 @@ bun dev
 ```
 $PROJECT_ROOT
 │
-├── public
-│   # icons
-│
 ├── src
-│   │   # React component files
-│   ├── components
-│       # Only that Page use component (not share component)
-│       ├── Pages
-│
-│   │   # Variables
-│   ├── constants
-│   │   # Interfaces files
-│   ├── interfaces
-│   │   # Page files
-│   ├── pages
-│   │   # API services
-│   ├── services
-│   │   # fonts
-│   ├── styles
+│   │   # logic
+│   ├── controller
+│   │   # schema
+│   ├── model
+│   │   # paths
+│   ├── routes
 │   │   # tools
 │   ├── utils
 ```
