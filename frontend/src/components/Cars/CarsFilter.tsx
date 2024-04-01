@@ -102,15 +102,22 @@ const InfoContainer = styled.div`
   display: flex;
   justify-content: space-between;
   margin: 32px 0;
+  @media ${devices.mobile} {
+    flex-direction: column;
+    gap: 40px;
+    align-items: center;
+  }
 `;
 const DataContainer = styled.div`
   display: flex;
   align-items: center;
   gap: 20px;
+  flex-wrap: wrap;
 `;
 const SortContainer = styled.div`
   display: flex;
   gap: 20px;
+  flex-wrap: wrap;
 `;
 
 const Data = styled.div`

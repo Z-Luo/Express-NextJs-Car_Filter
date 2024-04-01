@@ -23,13 +23,13 @@ export const sizes: ISize = {
 };
 
 export const devices: IDevices = {
-	miniMobile: `(min-width: ${sizes.miniMobile}px)`,
-	mobile: `(min-width: ${sizes.mobile}px)`,
-	tablet: `(min-width: ${sizes.tablet}px)`,
-	laptop: `(min-width: ${sizes.laptop}px)`,
-	largeLaptop: `(min-width: ${sizes.largeLaptop}px)`,
-	desktop: `(min-width: ${sizes.desktop}px)`,
-	largeDesktop: `(min-width: ${sizes.largeDesktop}px)`
+	miniMobile: `(max-width: ${sizes.miniMobile}px)`,
+	mobile: `(max-width: ${sizes.mobile}px)`,
+	tablet: `(max-width: ${sizes.tablet}px)`,
+	laptop: `(max-width: ${sizes.laptop}px)`,
+	largeLaptop: `(max-width: ${sizes.largeLaptop}px)`,
+	desktop: `(max-width: ${sizes.desktop}px)`,
+	largeDesktop: `(max-width: ${sizes.largeDesktop}px)`
 };
 
 export const color: IColor = {
